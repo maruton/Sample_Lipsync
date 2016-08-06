@@ -74,18 +74,19 @@ public class RealtimeLipsync : MonoBehaviour {
         }
 
         if (modeState == 1) {
-            Debug.Log("modeState: " + modeState);
+            //Debug.Log("modeState: " + modeState);
             clipperIntervaltime += Time.deltaTime;
             if (t > playVoiceLaptime) {
-                anim.CrossFade("default@sd_hmd", 0.1f);
+                anim.CrossFade("default@sd_hmd", 0.1f);//Clipper終了。
                 modeState = 2;
                 t = 0;
+                Debug.Log("*** default@sd_hmd");
             }
-            if(clipperIntervaltime>0.1f) {
+            if (clipperIntervaltime>0.1f) {
                 clipperIntervaltime = 0f;
                 audioSource.GetOutputData(voiceSampleData, 1);
                 if(voiceSampleData[0]>0.005f) {
-                    anim.CrossFade("mth_a@sd_hmd", 0.1f);
+                    anim.CrossFade("mth_a@sd_hmd", 0.1f);//CrossFade時間がClipper終了の口閉じアニメより長いと、こちらのアニメが残るので注意。 
                 }
                 else {
                     anim.CrossFade("default@sd_hmd", 0.1f);
